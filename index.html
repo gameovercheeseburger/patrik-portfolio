@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Patrik Santiago</title>
+<meta name="description" content="Patrik Santiago, full-stack software engineer: payments-adjacent finance systems, secure APIs, ETL and data pipelines.">
+<link rel="icon" type="image/jpeg" href="patrik.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: one narrow column, like a well-set CV; numbered sections, generous whitespace */
+:root {
+  --bg: #f5f6f3;
+  --surface: #ffffff;
+  --ink: #15181d;
+  --muted: #5d636d;
+  --rule: #dcdfe2;
+  --accent: #0e6b62;
+  --display: "Newsreader", Georgia, "Times New Roman", serif;
+  --body: "Manrope", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #111417; --surface: #181c20; --ink: #e8eaed; --muted: #9aa1ab; --rule: #2a3037; --accent: #4fc2b4; color-scheme: dark; }
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.7 var(--body); }
+a { color: var(--accent); text-underline-offset: 3px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 760px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.1; margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+/* Hero */
+.hero { padding-block: 96px 64px; display: grid; gap: 28px; }
+.hero-top { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+.hero img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: center 30%; border: 1px solid var(--rule); }
+.kicker { font: 500 .78rem/1.4 var(--mono); letter-spacing: .04em; color: var(--accent); }
+.hero h1 { font-size: clamp(3.2rem, 9vw, 5.4rem); letter-spacing: -.02em; }
+.hero h1 em { font-style: italic; color: var(--accent); }
+.bio { font-size: 1.15rem; max-width: 60ch; color: var(--ink); }
+.bio + .bio { color: var(--muted); font-size: 1.02rem; }
+.links { display: flex; flex-wrap: wrap; gap: 10px; }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 700; font-size: .9rem; transition: background-color .2s, color .2s, transform .2s; }
+.pill:hover { background: var(--ink); color: var(--bg); transform: translateY(-1px); }
+.pill.primary { background: var(--ink); color: var(--bg); }
+.pill.primary:hover { background: var(--accent); border-color: var(--accent); }
+
+/* Numbered sections */
+section.num { padding-block: 48px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 4.5rem 1fr; gap: 8px 24px; }
+@media (max-width: 560px) { section.num { grid-template-columns: 1fr; } }
+.n { font: 500 .85rem/1 var(--mono); color: var(--accent); padding-top: 12px; }
+.sec-body { display: grid; gap: 24px; min-width: 0; }
+.sec-body h2 { font-size: clamp(1.9rem, 4.5vw, 2.4rem); }
+.items { display: grid; gap: 20px; }
+.item h3 { font-size: 1.3rem; margin-bottom: 4px; }
+.item p { color: var(--muted); max-width: 62ch; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips span { font-size: .85rem; font-weight: 500; padding: 5px 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; }
+.skill-group { display: grid; gap: 10px; }
+.skill-group .lbl { font: 500 .74rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+.jobs { list-style: none; margin: 0; padding: 0; display: grid; }
+.jobs li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 4px 20px; padding-block: 16px; border-bottom: 1px solid var(--rule); }
+.jobs li:first-child { padding-top: 0; }
+@media (max-width: 560px) { .jobs li { grid-template-columns: 1fr; } }
+.jobs .when { font: 500 .8rem/1.6 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.jobs strong { font-family: var(--display); font-weight: 500; font-size: 1.25rem; }
+.jobs p { color: var(--muted); font-size: .97rem; }
+
+.work { display: grid; gap: 12px; }
+.card { display: grid; gap: 4px; padding: 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; color: var(--ink); text-decoration: none; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card h3 { font-size: 1.3rem; }
+.card h3::after { content: " ↗"; color: var(--accent); font-family: var(--body); font-size: 1rem; }
+.card p { color: var(--muted); font-size: .97rem; }
+
+footer { padding-block: 40px 56px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .9rem; color: var(--muted); }
+
+/* Gentle entrance */
+.hero > * { animation: up .7s ease both; }
+.hero > *:nth-child(2) { animation-delay: .08s; }
+.hero > *:nth-child(3) { animation-delay: .16s; }
+.hero > *:nth-child(4) { animation-delay: .24s; }
+.hero > *:nth-child(5) { animation-delay: .32s; }
+@keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="wrap">
+
+<header class="hero">
+  <div class="hero-top">
+    <img src="patrik.jpg" alt="Patrik Santiago" width="96" height="96">
+    <span class="kicker">Full-stack software engineer · C# / .NET · Java · SQL</span>
+  </div>
+  <h1>Patrik <em>Santiago</em></h1>
+  <p class="bio">I build the backend systems money and data move through: secure APIs, finance and ERP integrations, and the ETL pipelines that turn scattered records into numbers people can trust.</p>
+  <p class="bio">5+ years at IBM, Infor and Accenture across banking, insurance, ERP and enterprise reporting. SAIT Software Development graduate. Founder of Jurgen Software Solutions.</p>
+  <div class="links">
+    <a class="pill primary" href="patrik-santiago-resume.pdf" target="_blank" rel="noopener">Resume</a>
+    <a class="pill" href="https://www.linkedin.com/in/patrik-jurgen-santiago" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="pill" href="https://github.com/gameovercheeseburger" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</header>
+
+<section class="num" aria-labelledby="s1">
+  <span class="n">01</span>
+  <div class="sec-body">
+    <h2 id="s1">Core Competencies</h2>
+    <div class="items">
+      <div class="item"><h3>Secure, reliable backends</h3><p>REST, SOAP and GraphQL services in C#/.NET and Java Spring Boot, built with authentication, authorization, encryption and JWT/OAuth from the start.</p></div>
+      <div class="item"><h3>Financial and enterprise integration</h3><p>Connecting ERP, finance, CRM and reporting systems so data flows without manual work, using Apache Camel, Kafka, RabbitMQ and SFTP.</p></div>
+      <div class="item"><h3>ETL and data you can trust</h3><p>Pipelines with SSIS, AWS Glue, Oracle Data Integrator, Python and PowerShell that validate, transform and load data into warehouses and Power BI.</p></div>
+      <div class="item"><h3>Keeping production healthy</h3><p>Incident investigation with Splunk and OpenShift logs, root-cause fixes, CI/CD with Jenkins and Docker, and reliable rollbacks.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="num" aria-labelledby="s2">
+  <span class="n">02</span>
+  <div class="sec-body">
+    <h2 id="s2">Hard Skills</h2>
+    <div class="skill-group"><span class="lbl">Languages &amp; frameworks</span><div class="chips"><span>C#</span><span>.NET</span><span>Java</span><span>Spring Boot</span><span>Hibernate</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Python</span><span>PowerShell</span></div></div>
+    <div class="skill-group"><span class="lbl">Data</span><div class="chips"><span>SQL Server</span><span>Oracle</span><span>PostgreSQL</span><span>Azure SQL</span><span>SSIS</span><span>AWS Glue</span><span>Power BI</span><span>OLAP cubes</span></div></div>
+    <div class="skill-group"><span class="lbl">Cloud &amp; delivery</span><div class="chips"><span>AWS</span><span>Azure</span><span>Oracle Cloud</span><span>Red Hat OpenShift</span><span>Docker</span><span>Jenkins</span><span>GitHub Actions</span><span>Azure DevOps</span></div></div>
+    <div class="skill-group"><span class="lbl">AI</span><div class="chips"><span>LLM integration</span><span>Claude &amp; OpenAI APIs</span><span>Agentic workflows</span><span>AI-assisted testing &amp; code review</span></div></div>
+  </div>
+</section>
+
+<section class="num" aria-labelledby="s3">
+  <span class="n">03</span>
+  <div class="sec-body">
+    <h2 id="s3">Soft Skills</h2>
+    <div class="chips"><span>Clear client communication</span><span>Cross-team collaboration</span><span>Ownership in production</span><span>Thorough code reviews</span><span>Calm under incidents</span><span>Documentation people actually read</span></div>
+    <p class="item" style="color:var(--muted);max-width:62ch">I work closely with business stakeholders, architects and QA, from requirements through SIT/UAT to release, and I like explaining technical trade-offs in plain language.</p>
+  </div>
+</section>
+
+<section class="num" aria-labelledby="s4">
+  <span class="n">04</span>
+  <div class="sec-body">
+    <h2 id="s4">Experience</h2>
+    <ol class="jobs">
+      <li><span class="when">2025 – 2026</span><div><strong>Application Developer · IBM</strong><p>Java Spring Boot microservices and REST APIs on OpenShift; production incident resolution with Splunk; validated AI-generated code against enterprise security standards.</p></div></li>
+      <li><span class="when">2020 – 2023</span><div><strong>Software Engineer · Infor</strong><p>C# and Java APIs for ERP, finance and reporting tools; React dashboards; ETL into AWS data warehouses; JWT-secured services; Jenkins and Docker pipelines.</p></div></li>
+      <li><span class="when">2019 – 2020</span><div><strong>Associate Software Engineer · Accenture</strong><p>Oracle Sales Cloud integrations for banking and insurance clients; cut testing errors by 45% and improved data integrity by 60%.</p></div></li>
+      <li><span class="when">2018</span><div><strong>Project &amp; Automation Intern · Accenture</strong><p>Reporting automation in C#, VBA and SQL Server that reduced manual reporting time by 40%.</p></div></li>
+    </ol>
+  </div>
+</section>
+
+<section class="num" aria-labelledby="s5">
+  <span class="n">05</span>
+  <div class="sec-body">
+    <h2 id="s5">Selected Work</h2>
+    <div class="work">
+      <a class="card" href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener"><h3>Jurgen Software Solutions</h3><p>My software consultancy: custom software, ETL pipelines, AI and cloud. Multi-page site with a Claude-powered assistant.</p></a>
+      <a class="card" href="https://budgeting-app-azure-delta.vercel.app" target="_blank" rel="noopener"><h3>Budgeting App</h3><p>A personal finance app for tracking budgets and spending.</p></a>
+    </div>
+  </div>
+</section>
+
+<section class="num" aria-labelledby="s6">
+  <span class="n">06</span>
+  <div class="sec-body">
+    <h2 id="s6">Education &amp; Certifications</h2>
+    <div class="items">
+      <div class="item"><h3>Diploma, Software Development</h3><p>Southern Alberta Institute of Technology (SAIT), 2025</p></div>
+      <div class="item"><h3>B.S. Computer Engineering</h3><p>Adamson University, 2018</p></div>
+    </div>
+    <div class="chips"><span>IBM Generative &amp; Agentic AI Foundation</span><span>AWS Generative AI Essentials</span><span>OCI 2025 AI Foundations Associate</span><span>IBM Cloud Computing Fundamentals</span><span>IBM Enterprise Design Thinking</span><span>ServiceNow Flow Designer</span></div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Patrik Santiago</span>
+  <span>What else? <a href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener">Jurgen Software Solutions</a></span>
+</footer>
+
+</main>
+</body>
+</html>
