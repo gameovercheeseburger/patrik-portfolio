@@ -405,14 +405,33 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
     });
   }
 
-  /* Rotating role line */
+  /* Rotating role line. The phrases come from the Spring Boot roles-api when
+     ROLES_API is set; the built-in list is used until then or if it is down. */
+  var ROLES_API = '';
   var roles = ['ETL and data pipelines', 'secure REST APIs', 'finance and ERP integrations', 'Power BI reporting', 'AI-assisted tooling'];
   var rot = document.getElementById('rot');
+  var nextRoles = null; // list from the API, switched in once the current word is erased
+  if (ROLES_API) {
+    fetch(ROLES_API).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) {
+      var list = j && Array.isArray(j.roles) ? j.roles.filter(function (s) { return typeof s === 'string' && s.trim(); }) : [];
+      if (!list.length) return;
+      if (reduce) rot.textContent = list[0]; else nextRoles = list;
+    }).catch(function () {});
+  }
   if (!reduce) {
     var ri = 0, ci = roles[0].length, deleting = true;
     (function tick() {
-      var word = roles[ri];
-      if (deleting) { ci--; if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; } }
+      if (deleting) {
+        ci--;
+        if (ci === 0) {
+          deleting = false;
+          if (nextRoles) {
+            // keep going from the word just erased if it is in the new list
+            var at = nextRoles.indexOf(roles[ri]);
+            roles = nextRoles; nextRoles = null; ri = (at + 1) % roles.length;
+          } else ri = (ri + 1) % roles.length;
+        }
+      }
       else { ci++; if (ci === roles[ri].length) { deleting = true; rot.textContent = roles[ri]; return setTimeout(tick, 2200); } }
       rot.textContent = roles[ri].slice(0, ci) || ' ';
       setTimeout(tick, deleting ? 35 : 65);

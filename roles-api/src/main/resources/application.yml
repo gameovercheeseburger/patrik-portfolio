@@ -1,0 +1,15 @@
+# Most hosts (Render, Railway, Fly.io) tell the app which port to use through PORT.
+server:
+  port: ${PORT:8080}
+
+portfolio:
+  # Edit this list to change what the hero line types out.
+  roles:
+    - ETL and data pipelines
+    - secure REST APIs
+    - finance and ERP integrations
+    - Power BI reporting
+    - AI-assisted tooling
+  allowed-origins:
+    - https://patrik-portfolio-omega.vercel.app
+    - http://localhost:5500
