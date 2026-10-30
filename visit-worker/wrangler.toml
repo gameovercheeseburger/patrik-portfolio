@@ -1,0 +1,7 @@
+name = "patrik-visits"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[[kv_namespaces]]
+binding = "VISITS"
+id = "16fc46a1ed904cc395feacb875b730a9"

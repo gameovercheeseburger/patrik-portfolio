@@ -4,15 +4,19 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Patrik Santiago</title>
-<meta name="description" content="Patrik Santiago, full-stack software engineer: payments-adjacent finance systems, secure APIs, ETL and data pipelines.">
+<meta name="description" content="Patrik Santiago, full-stack software engineer: finance and ERP integrations, secure APIs, ETL and data pipelines.">
 <link rel="icon" type="image/jpeg" href="patrik.jpg">
 <meta name="theme-color" content="#f5f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111417" media="(prefers-color-scheme: dark)">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap">
+<script>
+  // Apply a saved light/dark choice before the page paints.
+  try { var t = localStorage.getItem('theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
 <style>
-/* Layout: one narrow column, like a well-set CV; numbered sections, generous whitespace */
+/* Layout: one narrow column like a well-set CV; a live data-flow canvas behind the hero; numbered sections */
 :root {
   --bg: #f5f6f3;
   --surface: #ffffff;
@@ -20,154 +24,303 @@
   --muted: #5d636d;
   --rule: #dcdfe2;
   --accent: #0e6b62;
+  --accent-soft: rgba(14, 107, 98, .12);
   --display: "Newsreader", Georgia, "Times New Roman", serif;
   --body: "Manrope", "Segoe UI", Helvetica, Arial, sans-serif;
   --mono: "JetBrains Mono", Consolas, "Courier New", monospace;
 }
 @media (prefers-color-scheme: dark) {
-  :root { --bg: #111417; --surface: #181c20; --ink: #e8eaed; --muted: #9aa1ab; --rule: #2a3037; --accent: #4fc2b4; color-scheme: dark; }
+  :root:not([data-theme="light"]) { --bg: #111417; --surface: #181c20; --ink: #e8eaed; --muted: #9aa1ab; --rule: #2a3037; --accent: #4fc2b4; --accent-soft: rgba(79, 194, 180, .14); color-scheme: dark; }
 }
+:root[data-theme="dark"] { --bg: #111417; --surface: #181c20; --ink: #e8eaed; --muted: #9aa1ab; --rule: #2a3037; --accent: #4fc2b4; --accent-soft: rgba(79, 194, 180, .14); color-scheme: dark; }
+
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.7 var(--body); }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 1.0625rem/1.7 var(--body); transition: background-color .3s, color .3s; }
 a { color: var(--accent); text-underline-offset: 3px; }
-a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.wrap { max-width: 760px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.wrap { max-width: 780px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); }
 h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.1; margin: 0; text-wrap: balance; }
 p { margin: 0; }
+button { font: inherit; cursor: pointer; }
 
-/* Hero */
-.hero { padding-block: 96px 64px; display: grid; gap: 28px; }
-.hero-top { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
-.hero img { width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: center 30%; border: 1px solid var(--rule); }
-.kicker { font: 500 .78rem/1.4 var(--mono); letter-spacing: .04em; color: var(--accent); }
-.hero h1 { font-size: clamp(3.2rem, 9vw, 5.4rem); letter-spacing: -.02em; }
+/* Scroll progress and top bar */
+.progress { position: fixed; top: env(safe-area-inset-top, 0px); left: 0; height: 2px; width: 100%; background: var(--accent); transform-origin: left; transform: scaleX(0); z-index: 30; }
+.topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--bg) 85%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .3s; }
+.topbar.scrolled { border-bottom-color: var(--rule); }
+.topbar .wrap { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-block: 10px; }
+.mark { font: 500 .85rem/1 var(--mono); color: var(--ink); text-decoration: none; }
+.mark span { color: var(--accent); }
+.topnav { display: flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.topnav a { font-size: .82rem; font-weight: 600; color: var(--muted); text-decoration: none; padding: 6px 10px; border-radius: 999px; transition: color .2s, background-color .2s; }
+.topnav a:hover { color: var(--ink); }
+.topnav a.active { color: var(--accent); background: var(--accent-soft); }
+.theme-btn { width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); display: grid; place-items: center; }
+.theme-btn svg { width: 16px; height: 16px; }
+@media (max-width: 620px) { .topnav a { display: none; } }
+
+/* Hero with live data-flow canvas */
+.hero { position: relative; isolation: isolate; }
+#flow { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -1; opacity: .9; pointer-events: none; }
+.hero .wrap { padding-block: 72px 56px; display: grid; gap: 26px; }
+.hero-top { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.hero img { width: 92px; height: 92px; border-radius: 50%; object-fit: cover; object-position: center 30%; border: 2px solid var(--accent); box-shadow: 0 0 0 6px var(--accent-soft); }
+.status { display: inline-flex; align-items: center; gap: 8px; font: 500 .78rem/1.4 var(--mono); color: var(--muted); padding: 6px 12px; border: 1px solid var(--rule); border-radius: 999px; background: var(--surface); }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: #2fae5d; box-shadow: 0 0 0 0 rgba(47, 174, 93, .6); animation: ping 2s infinite; }
+@keyframes ping { 70% { box-shadow: 0 0 0 8px rgba(47, 174, 93, 0); } 100% { box-shadow: 0 0 0 0 rgba(47, 174, 93, 0); } }
+.hero h1 { font-size: clamp(3.2rem, 10vw, 5.8rem); letter-spacing: -.025em; }
 .hero h1 em { font-style: italic; color: var(--accent); }
-.bio { font-size: 1.15rem; max-width: 60ch; color: var(--ink); }
-.bio + .bio { color: var(--muted); font-size: 1.02rem; }
+.role { font-family: var(--display); font-size: clamp(1.3rem, 3.4vw, 1.75rem); line-height: 1.3; }
+.role .rot { color: var(--accent); font-style: italic; border-right: 2px solid var(--accent); padding-right: 3px; white-space: nowrap; }
+.bio { max-width: 60ch; color: var(--muted); }
 .links { display: flex; flex-wrap: wrap; gap: 10px; }
-.pill { display: inline-flex; align-items: center; gap: 8px; padding: 9px 16px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 700; font-size: .9rem; transition: background-color .2s, color .2s, transform .2s; }
-.pill:hover { background: var(--ink); color: var(--bg); transform: translateY(-1px); }
+.pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border: 1px solid var(--ink); border-radius: 999px; color: var(--ink); background: transparent; text-decoration: none; font-weight: 700; font-size: .9rem; transition: background-color .2s, color .2s, transform .2s, border-color .2s; }
+.pill:hover { background: var(--ink); color: var(--bg); transform: translateY(-2px); }
 .pill.primary { background: var(--ink); color: var(--bg); }
 .pill.primary:hover { background: var(--accent); border-color: var(--accent); }
 
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-top: 8px; }
+@media (max-width: 620px) { .stats { grid-template-columns: repeat(2, 1fr); } }
+.stat { padding: 18px 12px 18px 0; display: grid; gap: 2px; }
+.stat b { font-family: var(--display); font-weight: 500; font-size: 2.3rem; line-height: 1; font-variant-numeric: tabular-nums; }
+.stat span { font-size: .8rem; color: var(--muted); }
+
 /* Numbered sections */
-section.num { padding-block: 48px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 4.5rem 1fr; gap: 8px 24px; }
+section.num { padding-block: 52px; border-top: 1px solid var(--rule); display: grid; grid-template-columns: 4.5rem 1fr; gap: 8px 24px; scroll-margin-top: 60px; }
 @media (max-width: 560px) { section.num { grid-template-columns: 1fr; } }
 .n { font: 500 .85rem/1 var(--mono); color: var(--accent); padding-top: 12px; }
 .sec-body { display: grid; gap: 24px; min-width: 0; }
-.sec-body h2 { font-size: clamp(1.9rem, 4.5vw, 2.4rem); }
-.items { display: grid; gap: 20px; }
+.sec-body h2 { font-size: clamp(1.9rem, 4.5vw, 2.5rem); }
+.hint { font-size: .9rem; color: var(--muted); }
+
+.items { display: grid; gap: 14px; }
+.item { padding: 18px 20px; border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); transition: opacity .3s, border-color .3s, transform .3s; }
 .item h3 { font-size: 1.3rem; margin-bottom: 4px; }
 .item p { color: var(--muted); max-width: 62ch; }
-.chips { display: flex; flex-wrap: wrap; gap: 8px; }
-.chips span { font-size: .85rem; font-weight: 500; padding: 5px 12px; background: var(--surface); border: 1px solid var(--rule); border-radius: 999px; }
+
+/* Skill filter */
 .skill-group { display: grid; gap: 10px; }
 .skill-group .lbl { font: 500 .74rem/1.4 var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chip { font-size: .85rem; font-weight: 500; padding: 6px 13px; background: var(--surface); color: var(--ink); border: 1px solid var(--rule); border-radius: 999px; transition: background-color .2s, color .2s, border-color .2s, transform .15s; }
+button.chip:hover { border-color: var(--accent); transform: translateY(-1px); }
+button.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+.filter-bar { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; min-height: 36px; padding: 8px 14px; border-radius: 10px; background: var(--accent-soft); font-size: .92rem; }
+.filter-bar button { border: 0; background: none; color: var(--accent); font-weight: 700; padding: 0; text-decoration: underline; text-underline-offset: 3px; }
+.dim { opacity: .28; }
+.hit { border-color: var(--accent) !important; }
 
-.jobs { list-style: none; margin: 0; padding: 0; display: grid; }
-.jobs li { display: grid; grid-template-columns: 7.5rem 1fr; gap: 4px 20px; padding-block: 16px; border-bottom: 1px solid var(--rule); }
-.jobs li:first-child { padding-top: 0; }
-@media (max-width: 560px) { .jobs li { grid-template-columns: 1fr; } }
-.jobs .when { font: 500 .8rem/1.6 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
-.jobs strong { font-family: var(--display); font-weight: 500; font-size: 1.25rem; }
-.jobs p { color: var(--muted); font-size: .97rem; }
+/* Experience */
+.jobs { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.job { border: 1px solid var(--rule); border-radius: 14px; background: var(--surface); transition: opacity .3s, border-color .3s; }
+.job-head { width: 100%; display: grid; grid-template-columns: 7.5rem 1fr auto; gap: 4px 18px; align-items: start; padding: 18px 20px; background: none; border: 0; color: var(--ink); text-align: left; }
+@media (max-width: 560px) { .job-head { grid-template-columns: 1fr auto; } .job-head .when { grid-column: 1 / -1; } }
+.when { font: 500 .8rem/1.8 var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.job-head strong { font-family: var(--display); font-weight: 500; font-size: 1.3rem; display: block; }
+.job-head small { color: var(--muted); font-size: .95rem; display: block; margin-top: 2px; }
+.plus { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--rule); display: grid; place-items: center; transition: transform .3s, background-color .2s; color: var(--accent); font-weight: 700; }
+.job-head[aria-expanded="true"] .plus { transform: rotate(45deg); background: var(--accent-soft); }
+.job-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
+.job-more > div { overflow: hidden; }
+.job-head[aria-expanded="true"] + .job-more { grid-template-rows: 1fr; }
+.job-more ul { margin: 0; padding: 0 20px 18px 40px; color: var(--muted); font-size: .96rem; display: grid; gap: 6px; }
 
-.work { display: grid; gap: 12px; }
-.card { display: grid; gap: 4px; padding: 20px; background: var(--surface); border: 1px solid var(--rule); border-radius: 14px; color: var(--ink); text-decoration: none; transition: border-color .2s, transform .2s; }
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.card h3 { font-size: 1.3rem; }
+/* Work cards */
+.work { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media (max-width: 620px) { .work { grid-template-columns: 1fr; } }
+.card { position: relative; display: grid; gap: 6px; padding: 22px; background: var(--surface); border: 1px solid var(--rule); border-radius: 16px; color: var(--ink); text-decoration: none; transform-style: preserve-3d; transition: border-color .2s, box-shadow .3s; overflow: hidden; }
+.card::before { content: ""; position: absolute; inset: 0; background: radial-gradient(240px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 60%); opacity: 0; transition: opacity .3s; }
+.card:hover { border-color: var(--accent); box-shadow: 0 14px 30px rgba(0, 0, 0, .1); }
+.card:hover::before { opacity: 1; }
+.card > * { position: relative; }
+.card .tag { font: 500 .72rem/1.4 var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.card h3 { font-size: 1.35rem; }
 .card h3::after { content: " ↗"; color: var(--accent); font-family: var(--body); font-size: 1rem; }
-.card p { color: var(--muted); font-size: .97rem; }
+.card p { color: var(--muted); font-size: .96rem; }
 
-footer { padding-block: 40px 56px; border-top: 1px solid var(--rule); display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: .9rem; color: var(--muted); }
+/* Contact */
+.contact { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding: 22px; border: 1px solid var(--rule); border-radius: 16px; background: var(--surface); }
+.contact code { font: 500 1rem/1.4 var(--mono); color: var(--ink); overflow-wrap: anywhere; }
+.toast { font-size: .85rem; color: var(--accent); font-weight: 700; }
 
-/* Gentle entrance */
-.hero > * { animation: up .7s ease both; }
-.hero > *:nth-child(2) { animation-delay: .08s; }
-.hero > *:nth-child(3) { animation-delay: .16s; }
-.hero > *:nth-child(4) { animation-delay: .24s; }
-.hero > *:nth-child(5) { animation-delay: .32s; }
+footer { padding-block: 36px 56px; border-top: 1px solid var(--rule); display: grid; gap: 10px; font-size: .88rem; color: var(--muted); }
+footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.privacy { font-size: .8rem; }
+
+/* Motion */
+.hero .wrap > * { animation: up .7s ease both; }
+.hero .wrap > *:nth-child(2) { animation-delay: .08s; }
+.hero .wrap > *:nth-child(3) { animation-delay: .16s; }
+.hero .wrap > *:nth-child(4) { animation-delay: .24s; }
+.hero .wrap > *:nth-child(5) { animation-delay: .32s; }
+.hero .wrap > *:nth-child(6) { animation-delay: .4s; }
 @keyframes up { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+.reveal { transition: opacity .7s ease, transform .7s ease; }
+.js .reveal.below { opacity: 0; transform: translateY(16px); }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .js .reveal.below { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
-<main class="wrap">
+<div class="progress" id="progress" aria-hidden="true"></div>
 
-<header class="hero">
-  <div class="hero-top">
-    <img src="patrik.jpg" alt="Patrik Santiago" width="96" height="96">
-    <span class="kicker">Full-stack software engineer · C# / .NET · Java · SQL</span>
-  </div>
-  <h1>Patrik <em>Santiago</em></h1>
-  <p class="bio">I build the backend systems money and data move through: secure APIs, finance and ERP integrations, and the ETL pipelines that turn scattered records into numbers people can trust.</p>
-  <p class="bio">5+ years at IBM, Infor and Accenture across banking, insurance, ERP and enterprise reporting. SAIT Software Development graduate. Founder of Jurgen Software Solutions.</p>
-  <div class="links">
-    <a class="pill primary" href="patrik-santiago-resume.pdf" target="_blank" rel="noopener">Resume</a>
-    <a class="pill" href="https://www.linkedin.com/in/patrik-jurgen-santiago" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="pill" href="https://github.com/gameovercheeseburger" target="_blank" rel="noopener">GitHub</a>
+<header class="topbar" id="topbar">
+  <div class="wrap">
+    <a class="mark" href="#top">patrik<span>.</span>santiago</a>
+    <nav class="topnav" aria-label="Sections">
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#work">Work</a>
+      <a href="#contact">Contact</a>
+      <button class="theme-btn" id="theme" type="button" aria-label="Switch light or dark theme">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </nav>
   </div>
 </header>
 
-<section class="num" aria-labelledby="s1">
-  <span class="n">01</span>
-  <div class="sec-body">
-    <h2 id="s1">Core Competencies</h2>
-    <div class="items">
-      <div class="item"><h3>Secure, reliable backends</h3><p>REST, SOAP and GraphQL services in C#/.NET and Java Spring Boot, built with authentication, authorization, encryption and JWT/OAuth from the start.</p></div>
-      <div class="item"><h3>Financial and enterprise integration</h3><p>Connecting ERP, finance, CRM and reporting systems so data flows without manual work, using Apache Camel, Kafka, RabbitMQ and SFTP.</p></div>
-      <div class="item"><h3>ETL and data you can trust</h3><p>Pipelines with SSIS, AWS Glue, Oracle Data Integrator, Python and PowerShell that validate, transform and load data into warehouses and Power BI.</p></div>
-      <div class="item"><h3>Keeping production healthy</h3><p>Incident investigation with Splunk and OpenShift logs, root-cause fixes, CI/CD with Jenkins and Docker, and reliable rollbacks.</p></div>
+<main id="top">
+<section class="hero" aria-label="Introduction">
+  <canvas id="flow" aria-hidden="true"></canvas>
+  <div class="wrap">
+    <div class="hero-top">
+      <img src="patrik.jpg" alt="Patrik Santiago" width="92" height="92">
+      <span class="status"><i aria-hidden="true"></i>Open to new opportunities</span>
+    </div>
+    <h1>Patrik <em>Santiago</em></h1>
+    <p class="role">Full-stack engineer building <span class="rot" id="rot">ETL and data pipelines</span></p>
+    <p class="bio">I build the backend systems money and data move through: secure APIs, finance and ERP integrations, and the pipelines that turn scattered records into numbers people can trust. 5+ years at IBM, Infor and Accenture. SAIT Software Development graduate and founder of Jurgen Software Solutions.</p>
+    <div class="links">
+      <a class="pill primary" href="patrik-santiago-resume.pdf" target="_blank" rel="noopener">Resume</a>
+      <a class="pill" href="https://www.linkedin.com/in/patrik-jurgen-santiago" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="pill" href="https://github.com/gameovercheeseburger" target="_blank" rel="noopener">GitHub</a>
+      <a class="pill" href="#contact">Get in touch</a>
+    </div>
+    <div class="stats">
+      <div class="stat"><b data-count="5" data-suffix="+">5+</b><span>Years in enterprise software</span></div>
+      <div class="stat"><b data-count="3">3</b><span>Global employers</span></div>
+      <div class="stat"><b data-count="9">9</b><span>Certifications</span></div>
+      <div class="stat"><b data-count="45" data-suffix="%">45%</b><span>Fewer testing errors</span></div>
     </div>
   </div>
 </section>
 
-<section class="num" aria-labelledby="s2">
+<div class="wrap">
+
+<section class="num reveal" id="competencies" aria-labelledby="s1">
+  <span class="n">01</span>
+  <div class="sec-body">
+    <h2 id="s1">Core Competencies</h2>
+    <div class="items" data-filterable>
+      <div class="item" data-skills="csharp java spring security apis"><h3>Secure, reliable backends</h3><p>REST, SOAP and GraphQL services in C#/.NET and Java Spring Boot, built with authentication, authorization, encryption and JWT/OAuth from the start.</p></div>
+      <div class="item" data-skills="java integration kafka apis"><h3>Financial and enterprise integration</h3><p>Connecting ERP, finance, CRM and reporting systems so data flows without manual work, using Apache Camel, Kafka, RabbitMQ and SFTP.</p></div>
+      <div class="item" data-skills="etl sql python aws powerbi"><h3>ETL and data you can trust</h3><p>Pipelines with SSIS, AWS Glue, Oracle Data Integrator, Python and PowerShell that validate, transform and load data into warehouses and Power BI.</p></div>
+      <div class="item" data-skills="cloud devops"><h3>Keeping production healthy</h3><p>Incident investigation with Splunk and OpenShift logs, root-cause fixes, CI/CD with Jenkins and Docker, and reliable rollbacks.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="num reveal" id="skills" aria-labelledby="s2">
   <span class="n">02</span>
   <div class="sec-body">
     <h2 id="s2">Hard Skills</h2>
-    <div class="skill-group"><span class="lbl">Languages &amp; frameworks</span><div class="chips"><span>C#</span><span>.NET</span><span>Java</span><span>Spring Boot</span><span>Hibernate</span><span>TypeScript</span><span>React</span><span>Node.js</span><span>Python</span><span>PowerShell</span></div></div>
-    <div class="skill-group"><span class="lbl">Data</span><div class="chips"><span>SQL Server</span><span>Oracle</span><span>PostgreSQL</span><span>Azure SQL</span><span>SSIS</span><span>AWS Glue</span><span>Power BI</span><span>OLAP cubes</span></div></div>
-    <div class="skill-group"><span class="lbl">Cloud &amp; delivery</span><div class="chips"><span>AWS</span><span>Azure</span><span>Oracle Cloud</span><span>Red Hat OpenShift</span><span>Docker</span><span>Jenkins</span><span>GitHub Actions</span><span>Azure DevOps</span></div></div>
-    <div class="skill-group"><span class="lbl">AI</span><div class="chips"><span>LLM integration</span><span>Claude &amp; OpenAI APIs</span><span>Agentic workflows</span><span>AI-assisted testing &amp; code review</span></div></div>
+    <p class="hint">Click a skill to highlight where I've used it.</p>
+    <div class="filter-bar" id="filter-bar" role="status" aria-live="polite">Showing everything.</div>
+    <div class="skill-group"><span class="lbl">Languages &amp; frameworks</span><div class="chips">
+      <button class="chip" type="button" data-skill="csharp" aria-pressed="false">C# / .NET</button>
+      <button class="chip" type="button" data-skill="java" aria-pressed="false">Java</button>
+      <button class="chip" type="button" data-skill="spring" aria-pressed="false">Spring Boot</button>
+      <button class="chip" type="button" data-skill="react" aria-pressed="false">React / TypeScript</button>
+      <button class="chip" type="button" data-skill="python" aria-pressed="false">Python</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">Data</span><div class="chips">
+      <button class="chip" type="button" data-skill="sql" aria-pressed="false">SQL Server / Oracle</button>
+      <button class="chip" type="button" data-skill="etl" aria-pressed="false">ETL (SSIS, Glue, ODI)</button>
+      <button class="chip" type="button" data-skill="powerbi" aria-pressed="false">Power BI</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">Integration &amp; security</span><div class="chips">
+      <button class="chip" type="button" data-skill="apis" aria-pressed="false">REST / SOAP / GraphQL</button>
+      <button class="chip" type="button" data-skill="integration" aria-pressed="false">ERP &amp; CRM integration</button>
+      <button class="chip" type="button" data-skill="kafka" aria-pressed="false">Kafka / Camel / MQ</button>
+      <button class="chip" type="button" data-skill="security" aria-pressed="false">JWT / OAuth / encryption</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">Cloud, delivery &amp; AI</span><div class="chips">
+      <button class="chip" type="button" data-skill="aws" aria-pressed="false">AWS</button>
+      <button class="chip" type="button" data-skill="cloud" aria-pressed="false">OpenShift / Azure</button>
+      <button class="chip" type="button" data-skill="devops" aria-pressed="false">Jenkins / Docker / CI/CD</button>
+      <button class="chip" type="button" data-skill="ai" aria-pressed="false">LLMs &amp; agentic AI</button>
+    </div></div>
   </div>
 </section>
 
-<section class="num" aria-labelledby="s3">
+<section class="num reveal" aria-labelledby="s3">
   <span class="n">03</span>
   <div class="sec-body">
     <h2 id="s3">Soft Skills</h2>
-    <div class="chips"><span>Clear client communication</span><span>Cross-team collaboration</span><span>Ownership in production</span><span>Thorough code reviews</span><span>Calm under incidents</span><span>Documentation people actually read</span></div>
-    <p class="item" style="color:var(--muted);max-width:62ch">I work closely with business stakeholders, architects and QA, from requirements through SIT/UAT to release, and I like explaining technical trade-offs in plain language.</p>
+    <div class="chips"><span class="chip">Clear client communication</span><span class="chip">Cross-team collaboration</span><span class="chip">Ownership in production</span><span class="chip">Thorough code reviews</span><span class="chip">Calm under incidents</span><span class="chip">Documentation people actually read</span></div>
+    <p class="hint">I work closely with business stakeholders, architects and QA, from requirements through SIT/UAT to release, and I like explaining technical trade-offs in plain language.</p>
   </div>
 </section>
 
-<section class="num" aria-labelledby="s4">
+<section class="num reveal" id="experience" aria-labelledby="s4">
   <span class="n">04</span>
   <div class="sec-body">
     <h2 id="s4">Experience</h2>
-    <ol class="jobs">
-      <li><span class="when">2025 – 2026</span><div><strong>Application Developer · IBM</strong><p>Java Spring Boot microservices and REST APIs on OpenShift; production incident resolution with Splunk; validated AI-generated code against enterprise security standards.</p></div></li>
-      <li><span class="when">2020 – 2023</span><div><strong>Software Engineer · Infor</strong><p>C# and Java APIs for ERP, finance and reporting tools; React dashboards; ETL into AWS data warehouses; JWT-secured services; Jenkins and Docker pipelines.</p></div></li>
-      <li><span class="when">2019 – 2020</span><div><strong>Associate Software Engineer · Accenture</strong><p>Oracle Sales Cloud integrations for banking and insurance clients; cut testing errors by 45% and improved data integrity by 60%.</p></div></li>
-      <li><span class="when">2018</span><div><strong>Project &amp; Automation Intern · Accenture</strong><p>Reporting automation in C#, VBA and SQL Server that reduced manual reporting time by 40%.</p></div></li>
+    <p class="hint">Select a role to see more.</p>
+    <ol class="jobs" data-filterable>
+      <li class="job" data-skills="java spring apis cloud devops security python powerbi ai">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">2025 – 2026</span><span><strong>Application Developer · IBM</strong><small>Spring Boot microservices and REST APIs on Red Hat OpenShift.</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="job-more"><div><ul>
+          <li>Built and supported Java Spring Boot microservices connecting client apps, databases and downstream enterprise systems.</li>
+          <li>Resolved production incidents using OpenShift logs and Splunk dashboards to find root causes and restore service.</li>
+          <li>Applied authentication, authorization and encryption; validated AI-generated code against enterprise security standards.</li>
+          <li>Automated report generation with Python and built Power BI reporting on Tenable data for clients and management.</li>
+        </ul></div></div>
+      </li>
+      <li class="job" data-skills="csharp java react apis integration kafka etl sql python aws powerbi devops security">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">2020 – 2023</span><span><strong>Software Engineer · Infor</strong><small>C# and Java APIs for ERP, finance and reporting; ETL into AWS warehouses.</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="job-more"><div><ul>
+          <li>Built REST APIs and backend services in C# and Java for ERP integrations and finance tools, using Apache Camel and Hibernate.</li>
+          <li>Developed React dashboards for EPM datasets and business modeling apps in C# and React.</li>
+          <li>Created ETL pipelines with SSIS, PowerShell and Python moving S3 data into cloud warehouses; used AWS Glue.</li>
+          <li>Built JWT-authenticated services; automated deployments with Jenkins, Docker and Bitbucket pipelines.</li>
+          <li>Refactored legacy code with Factory and Singleton patterns and replaced servlets with REST controllers.</li>
+        </ul></div></div>
+      </li>
+      <li class="job" data-skills="java apis integration etl sql python">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">2019 – 2020</span><span><strong>Associate Software Engineer · Accenture</strong><small>Oracle Sales Cloud integrations for banking and insurance clients.</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="job-more"><div><ul>
+          <li>Developed Oracle Sales Cloud integrations with Java, Groovy, SOAP and REST for business and compliance needs.</li>
+          <li>Designed ETL and database automation with Oracle Data Integrator and Azure pipelines.</li>
+          <li>Automated testing workflows with J2EE, reducing errors by 45%; improved data integrity by 60% with Groovy scripting.</li>
+        </ul></div></div>
+      </li>
+      <li class="job" data-skills="csharp sql">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">2018</span><span><strong>Project &amp; Automation Intern · Accenture</strong><small>Reporting automation in C#, VBA and SQL Server.</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="job-more"><div><ul>
+          <li>Built report generation and email scheduling tools; modernized legacy C++ reporting with .NET.</li>
+          <li>Created data transformation routines that cut manual reporting time by 40%.</li>
+        </ul></div></div>
+      </li>
     </ol>
   </div>
 </section>
 
-<section class="num" aria-labelledby="s5">
+<section class="num reveal" id="work" aria-labelledby="s5">
   <span class="n">05</span>
   <div class="sec-body">
     <h2 id="s5">Selected Work</h2>
     <div class="work">
-      <a class="card" href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener"><h3>Jurgen Software Solutions</h3><p>My software consultancy: custom software, ETL pipelines, AI and cloud. Multi-page site with a Claude-powered assistant.</p></a>
-      <a class="card" href="https://budgeting-app-azure-delta.vercel.app" target="_blank" rel="noopener"><h3>Budgeting App</h3><p>A personal finance app for tracking budgets and spending.</p></a>
+      <a class="card" href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener"><span class="tag">Company</span><h3>Jurgen Software Solutions</h3><p>My software consultancy: custom software, ETL pipelines, AI and cloud. Multi-page site with an interactive ETL security diagram.</p></a>
+      <a class="card" href="https://budgeting-app-azure-delta.vercel.app" target="_blank" rel="noopener"><span class="tag">Product</span><h3>Budgie</h3><p>A personal budgeting app for tracking budgets and spending, deployed on Vercel.</p></a>
     </div>
   </div>
 </section>
 
-<section class="num" aria-labelledby="s6">
+<section class="num reveal" aria-labelledby="s6">
   <span class="n">06</span>
   <div class="sec-body">
     <h2 id="s6">Education &amp; Certifications</h2>
@@ -175,15 +328,201 @@ footer { padding-block: 40px 56px; border-top: 1px solid var(--rule); display: f
       <div class="item"><h3>Diploma, Software Development</h3><p>Southern Alberta Institute of Technology (SAIT), 2025</p></div>
       <div class="item"><h3>B.S. Computer Engineering</h3><p>Adamson University, 2018</p></div>
     </div>
-    <div class="chips"><span>IBM Generative &amp; Agentic AI Foundation</span><span>AWS Generative AI Essentials</span><span>OCI 2025 AI Foundations Associate</span><span>IBM Cloud Computing Fundamentals</span><span>IBM Enterprise Design Thinking</span><span>ServiceNow Flow Designer</span></div>
+    <div class="chips"><span class="chip">IBM Generative &amp; Agentic AI Foundation</span><span class="chip">AWS Generative AI Essentials</span><span class="chip">OCI 2025 AI Foundations Associate</span><span class="chip">IBM Cloud Computing Fundamentals</span><span class="chip">IBM Enterprise Design Thinking</span><span class="chip">ServiceNow Flow Designer</span></div>
+  </div>
+</section>
+
+<section class="num reveal" id="contact" aria-labelledby="s7">
+  <span class="n">07</span>
+  <div class="sec-body">
+    <h2 id="s7">Let's talk</h2>
+    <p class="hint">Hiring for backend, integration or data roles? I'd like to hear from you.</p>
+    <div class="contact">
+      <code id="email">patrikjurgen.santiago@gmail.com</code>
+      <button class="pill primary" type="button" id="copy">Copy email</button>
+      <a class="pill" href="https://www.linkedin.com/in/patrik-jurgen-santiago" target="_blank" rel="noopener">Message on LinkedIn</a>
+      <span class="toast" id="toast" role="status" aria-live="polite"></span>
+    </div>
   </div>
 </section>
 
 <footer>
-  <span>© 2026 Patrik Santiago</span>
-  <span>What else? <a href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener">Jurgen Software Solutions</a></span>
+  <div class="row">
+    <span>© 2026 Patrik Santiago</span>
+    <span>What else? <a href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener">Jurgen Software Solutions</a></span>
+  </div>
+  <p class="privacy">This site records each visit's IP address, approximate location, browser and referring page to understand who visits. It is not shared with anyone.</p>
 </footer>
 
+</div>
 </main>
+
+<script>
+(function () {
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.documentElement.classList.add('js');
+
+  /* Visit log: one quiet request per page view */
+  try {
+    fetch('https://patrik-visits.jurgen-chat.workers.dev/visit', {
+      method: 'POST', keepalive: true, headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ page: location.pathname, ref: document.referrer })
+    }).catch(function () {});
+  } catch (e) {}
+
+  /* Theme toggle */
+  document.getElementById('theme').addEventListener('click', function () {
+    var root = document.documentElement;
+    var dark = root.dataset.theme ? root.dataset.theme === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+    root.dataset.theme = dark ? 'light' : 'dark';
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+  });
+
+  /* Scroll progress, top bar border, active section */
+  var bar = document.getElementById('progress'), topbar = document.getElementById('topbar');
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.topnav a'));
+  function onScroll() {
+    var h = document.documentElement.scrollHeight - innerHeight;
+    bar.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+    topbar.classList.toggle('scrolled', scrollY > 8);
+    var current = null;
+    navLinks.forEach(function (a) {
+      var s = document.querySelector(a.getAttribute('href'));
+      if (s && s.getBoundingClientRect().top < innerHeight * 0.4) current = a;
+    });
+    navLinks.forEach(function (a) { a.classList.toggle('active', a === current); });
+  }
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  /* Sections below the fold fade up as they arrive */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.remove('below'); io.unobserve(e.target); } });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      if (el.getBoundingClientRect().top > innerHeight) { el.classList.add('below'); io.observe(el); }
+    });
+  }
+
+  /* Rotating role line */
+  var roles = ['ETL and data pipelines', 'secure REST APIs', 'finance and ERP integrations', 'Power BI reporting', 'AI-assisted tooling'];
+  var rot = document.getElementById('rot');
+  if (!reduce) {
+    var ri = 0, ci = roles[0].length, deleting = true;
+    (function tick() {
+      var word = roles[ri];
+      if (deleting) { ci--; if (ci === 0) { deleting = false; ri = (ri + 1) % roles.length; } }
+      else { ci++; if (ci === roles[ri].length) { deleting = true; rot.textContent = roles[ri]; return setTimeout(tick, 2200); } }
+      rot.textContent = roles[ri].slice(0, ci) || ' ';
+      setTimeout(tick, deleting ? 35 : 65);
+    })();
+  }
+
+  /* Count-up stats */
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var end = +el.dataset.count, suffix = el.dataset.suffix || '';
+    if (reduce) return;
+    var start = performance.now(), dur = 1200;
+    (function step(now) {
+      var p = Math.min(1, (now - start) / dur), v = Math.round(end * (1 - Math.pow(1 - p, 3)));
+      el.textContent = v + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    })(start);
+  });
+
+  /* Skill filter: highlight matching competencies and roles */
+  var chips = Array.prototype.slice.call(document.querySelectorAll('button.chip[data-skill]'));
+  var targets = Array.prototype.slice.call(document.querySelectorAll('[data-filterable] > [data-skills]'));
+  var fbar = document.getElementById('filter-bar');
+  function applyFilter(skill, label) {
+    chips.forEach(function (c) { c.setAttribute('aria-pressed', String(c.dataset.skill === skill)); });
+    var n = 0;
+    targets.forEach(function (t) {
+      var match = !skill || (' ' + t.dataset.skills + ' ').indexOf(' ' + skill + ' ') > -1;
+      if (skill && match) n++;
+      t.classList.toggle('dim', !match);
+      t.classList.toggle('hit', !!skill && match);
+    });
+    fbar.textContent = '';
+    if (!skill) { fbar.textContent = 'Showing everything.'; return; }
+    fbar.append(document.createTextNode(label + ': ' + n + (n === 1 ? ' match' : ' matches') + ' in competencies and experience. '));
+    var clear = document.createElement('button'); clear.type = 'button'; clear.textContent = 'Clear';
+    clear.addEventListener('click', function () { applyFilter(null); });
+    var jump = document.createElement('button'); jump.type = 'button'; jump.textContent = 'See experience';
+    jump.addEventListener('click', function () { document.getElementById('experience').scrollIntoView(); });
+    fbar.append(clear, document.createTextNode(' · '), jump);
+  }
+  chips.forEach(function (c) {
+    c.addEventListener('click', function () {
+      applyFilter(c.getAttribute('aria-pressed') === 'true' ? null : c.dataset.skill, c.textContent);
+    });
+  });
+
+  /* Expandable roles */
+  document.querySelectorAll('.job-head').forEach(function (b) {
+    b.addEventListener('click', function () { b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true')); });
+  });
+
+  /* Card glow follows the pointer */
+  document.querySelectorAll('.card').forEach(function (card) {
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  /* Copy email */
+  var toast = document.getElementById('toast');
+  document.getElementById('copy').addEventListener('click', function () {
+    var addr = document.getElementById('email').textContent;
+    function ok() { toast.textContent = 'Copied'; setTimeout(function () { toast.textContent = ''; }, 2000); }
+    function fallback() { var r = document.createRange(); r.selectNodeContents(document.getElementById('email')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); toast.textContent = 'Press Ctrl+C to copy'; }
+    try { navigator.clipboard.writeText(addr).then(ok, fallback); } catch (e) { fallback(); }
+  });
+
+  /* Hero canvas: records flow left to right through three stages (extract, transform, load) */
+  var cv = document.getElementById('flow'), ctx = cv.getContext('2d');
+  var W = 0, H = 0, dpr = Math.min(devicePixelRatio || 1, 2), pts = [], mouse = { x: -999, y: -999 };
+  function accent() { return getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#0e6b62'; }
+  function size() {
+    var r = cv.getBoundingClientRect(); W = r.width; H = r.height;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    var count = Math.round(Math.min(90, W / 12));
+    pts = []; for (var i = 0; i < count; i++) pts.push(spawn(true));
+  }
+  function spawn(anywhere) {
+    return { x: anywhere ? Math.random() * W : -10, y: H * (0.15 + Math.random() * 0.7), v: 0.35 + Math.random() * 0.6, r: 1 + Math.random() * 1.8, lane: Math.random() };
+  }
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    var c = accent();
+    var gates = [W * 0.28, W * 0.55, W * 0.82];
+    ctx.strokeStyle = c; ctx.globalAlpha = 0.08; ctx.lineWidth = 1;
+    gates.forEach(function (g) { ctx.beginPath(); ctx.moveTo(g, H * 0.1); ctx.lineTo(g, H * 0.9); ctx.stroke(); });
+    ctx.fillStyle = c;
+    pts.forEach(function (p) {
+      // records converge toward a single lane after "transform", like cleaned data
+      var target = p.x > gates[1] ? H * (0.45 + p.lane * 0.1) : p.y;
+      p.y += (target - p.y) * 0.02;
+      var dx = p.x - mouse.x, dy = p.y - mouse.y, d2 = dx * dx + dy * dy;
+      if (d2 < 9000) { p.y += dy / Math.sqrt(d2 + 1) * 1.2; }
+      p.x += p.v * (p.x > gates[0] && p.x < gates[1] ? 0.6 : 1);
+      if (p.x > W + 10) Object.assign(p, spawn(false));
+      ctx.globalAlpha = p.x > gates[1] ? 0.55 : 0.3;
+      ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2); ctx.fill();
+    });
+    ctx.globalAlpha = 1;
+    if (!reduce) requestAnimationFrame(draw);
+  }
+  addEventListener('resize', size);
+  document.querySelector('.hero').addEventListener('pointermove', function (e) {
+    var r = cv.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top;
+  });
+  document.querySelector('.hero').addEventListener('pointerleave', function () { mouse.x = mouse.y = -999; });
+  size(); draw();
+})();
+</script>
 </body>
 </html>
