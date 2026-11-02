@@ -452,7 +452,7 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
 
   /* Rotating role line. The phrases come from the Spring Boot roles-api when
      ROLES_API is set; the built-in list is used until then or if it is down. */
-  var ROLES_API = '';
+  var ROLES_API = 'https://patrik-roles-api.onrender.com/api/roles';
   var roles = ['Java and Spring Boot services', 'C#/.NET services', 'React applications', 'ETL pipelines', 'reliable data workflows'];
   var rot = document.getElementById('rot');
   var nextRoles = null; // list from the API, switched in once the current word is erased
