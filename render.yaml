@@ -1,0 +1,13 @@
+# Hosts the Spring Boot roles API on Render's free plan.
+services:
+  - type: web
+    name: patrik-roles-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./roles-api/Dockerfile
+    dockerContext: ./roles-api
+    healthCheckPath: /api/health
+    autoDeploy: true
+    buildFilter:
+      paths:
+        - roles-api/**
