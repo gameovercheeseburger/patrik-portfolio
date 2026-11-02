@@ -22,7 +22,7 @@ class RolesControllerTest {
     void returnsRolesFromConfig() throws Exception {
         mvc.perform(get("/api/roles"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.roles[0]").value("ETL and data pipelines"))
+                .andExpect(jsonPath("$.roles[0]").value("Java and Spring Boot services"))
                 .andExpect(jsonPath("$.roles.length()").value(5));
     }
 

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Patrik Santiago</title>
-<meta name="description" content="Patrik Santiago, full-stack software engineer: finance and ERP integrations, secure APIs, ETL and data pipelines.">
+<meta name="description" content="Patrik Santiago, software and data engineer in Calgary: Java/Spring Boot and C#/.NET services, React applications and ETL pipelines.">
 <link rel="icon" type="image/jpeg" href="patrik.jpg">
 <meta name="theme-color" content="#f5f6f3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111417" media="(prefers-color-scheme: dark)">
@@ -123,6 +123,7 @@ button.chip[aria-pressed="true"] { background: var(--accent); border-color: var(
 .job-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .35s ease; }
 .job-more > div { overflow: hidden; }
 .job-head[aria-expanded="true"] + .job-more { grid-template-rows: 1fr; }
+.job-more h4 { margin: 0; padding: 4px 20px 8px 40px; font-size: .9rem; font-weight: 700; }
 .job-more ul { margin: 0; padding: 0 20px 18px 40px; color: var(--muted); font-size: .96rem; display: grid; gap: 6px; }
 
 /* Work cards */
@@ -191,8 +192,8 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
       <span class="status"><i aria-hidden="true"></i>Open to new opportunities</span>
     </div>
     <h1>Patrik <em>Santiago</em></h1>
-    <p class="role">Full-stack engineer building <span class="rot" id="rot">ETL and data pipelines</span></p>
-    <p class="bio">I build the backend systems money and data move through: secure APIs, finance and ERP integrations, and the pipelines that turn scattered records into numbers people can trust. 5+ years at IBM, Infor and Accenture. SAIT Software Development graduate and founder of Jurgen Software Solutions.</p>
+    <p class="role">Software and data engineer building <span class="rot" id="rot">Java and Spring Boot services</span></p>
+    <p class="bio">Calgary-based software engineer with 5+ years of experience spanning application development, data engineering, enterprise integrations and BI at IBM, Infor and Accenture. I build Java/Spring Boot and C#/.NET services, React applications and ETL pipelines, and work directly with clients, business stakeholders, architects, developers and QA to turn requirements into working software and reliable data workflows.</p>
     <div class="links">
       <a class="pill primary" href="patrik-santiago-resume.pdf" target="_blank" rel="noopener">Resume</a>
       <a class="pill" href="https://www.linkedin.com/in/patrik-jurgen-santiago" target="_blank" rel="noopener">LinkedIn</a>
@@ -202,8 +203,8 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
     <div class="stats">
       <div class="stat"><b data-count="5" data-suffix="+">5+</b><span>Years in enterprise software</span></div>
       <div class="stat"><b data-count="3">3</b><span>Global employers</span></div>
-      <div class="stat"><b data-count="9">9</b><span>Certifications</span></div>
-      <div class="stat"><b data-count="45" data-suffix="%">45%</b><span>Fewer testing errors</span></div>
+      <div class="stat"><b data-count="7">7</b><span>Certifications and training</span></div>
+      <div class="stat"><b data-count="3">3</b><span>Infor products worked on concurrently</span></div>
     </div>
   </div>
 </section>
@@ -215,10 +216,10 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
   <div class="sec-body">
     <h2 id="s1">Core Competencies</h2>
     <div class="items" data-filterable>
-      <div class="item" data-skills="csharp java spring security apis"><h3>Secure, reliable backends</h3><p>REST, SOAP and GraphQL services in C#/.NET and Java Spring Boot, built with authentication, authorization, encryption and JWT/OAuth from the start.</p></div>
-      <div class="item" data-skills="java integration kafka apis"><h3>Financial and enterprise integration</h3><p>Connecting ERP, finance, CRM and reporting systems so data flows without manual work, using Apache Camel, Kafka, RabbitMQ and SFTP.</p></div>
-      <div class="item" data-skills="etl sql python aws powerbi"><h3>ETL and data you can trust</h3><p>Pipelines with SSIS, AWS Glue, Oracle Data Integrator, Python and PowerShell that validate, transform and load data into warehouses and Power BI.</p></div>
-      <div class="item" data-skills="cloud devops"><h3>Keeping production healthy</h3><p>Incident investigation with Splunk and OpenShift logs, root-cause fixes, CI/CD with Jenkins and Docker, and reliable rollbacks.</p></div>
+      <div class="item" data-skills="java spring csharp apis integration"><h3>Application development</h3><p>Java/Spring Boot and C#/.NET services, REST and GraphQL APIs, and legacy application modernization, including Java 8 to Java 17 upgrades.</p></div>
+      <div class="item" data-skills="etl sql python aws olap"><h3>Data engineering</h3><p>ETL pipelines, data warehouse enhancements, OLAP imports, and Oracle SQL/PLSQL performance tuning.</p></div>
+      <div class="item" data-skills="apis integration kafka bi oraclebi powerbi crystal"><h3>Enterprise integrations and BI</h3><p>ERP, finance and reporting integrations using Apache Camel, Kafka, MQ and SFTP, plus Infor, Oracle and Power BI reporting.</p></div>
+      <div class="item" data-skills="cloud devops testing aws"><h3>Delivery and production support</h3><p>Code reviews, testing, CI/CD, AWS serverless workflows, and incident investigation with Splunk and OpenShift logs.</p></div>
     </div>
   </div>
 </section>
@@ -226,32 +227,44 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
 <section class="num reveal" id="skills" aria-labelledby="s2">
   <span class="n">02</span>
   <div class="sec-body">
-    <h2 id="s2">Hard Skills</h2>
+    <h2 id="s2">Technical Skills</h2>
     <p class="hint">Click a skill to highlight where I've used it.</p>
     <div class="filter-bar" id="filter-bar" role="status" aria-live="polite">Showing everything.</div>
-    <div class="skill-group"><span class="lbl">Languages &amp; frameworks</span><div class="chips">
-      <button class="chip" type="button" data-skill="csharp" aria-pressed="false">C# / .NET</button>
+    <div class="skill-group"><span class="lbl">Backend &amp; languages</span><div class="chips">
       <button class="chip" type="button" data-skill="java" aria-pressed="false">Java</button>
       <button class="chip" type="button" data-skill="spring" aria-pressed="false">Spring Boot</button>
-      <button class="chip" type="button" data-skill="react" aria-pressed="false">React / TypeScript</button>
+      <button class="chip" type="button" data-skill="csharp" aria-pressed="false">C# / .NET</button>
       <button class="chip" type="button" data-skill="python" aria-pressed="false">Python</button>
+      <button class="chip" type="button" data-skill="scripting" aria-pressed="false">Groovy / PowerShell / VB6 / VBA</button>
     </div></div>
-    <div class="skill-group"><span class="lbl">Data</span><div class="chips">
-      <button class="chip" type="button" data-skill="sql" aria-pressed="false">SQL Server / Oracle</button>
-      <button class="chip" type="button" data-skill="etl" aria-pressed="false">ETL (SSIS, Glue, ODI)</button>
+    <div class="skill-group"><span class="lbl">Frontend</span><div class="chips">
+      <button class="chip" type="button" data-skill="react" aria-pressed="false">React / TypeScript</button>
+      <button class="chip" type="button" data-skill="legacyweb" aria-pressed="false">JSP / jQuery</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">Data engineering &amp; databases</span><div class="chips">
+      <button class="chip" type="button" data-skill="etl" aria-pressed="false">ETL (SSIS, Oracle Data Integrator)</button>
+      <button class="chip" type="button" data-skill="sql" aria-pressed="false">Oracle SQL/PLSQL / SQL Server / Azure SQL</button>
+      <button class="chip" type="button" data-skill="olap" aria-pressed="false">OLAP cubes</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">BI &amp; reporting</span><div class="chips">
+      <button class="chip" type="button" data-skill="bi" aria-pressed="false">Infor DWD / EPM / Lawson BI</button>
+      <button class="chip" type="button" data-skill="oraclebi" aria-pressed="false">Oracle BI and Analytics</button>
       <button class="chip" type="button" data-skill="powerbi" aria-pressed="false">Power BI</button>
+      <button class="chip" type="button" data-skill="crystal" aria-pressed="false">SAP Crystal Reports</button>
     </div></div>
-    <div class="skill-group"><span class="lbl">Integration &amp; security</span><div class="chips">
+    <div class="skill-group"><span class="lbl">APIs &amp; integration</span><div class="chips">
       <button class="chip" type="button" data-skill="apis" aria-pressed="false">REST / SOAP / GraphQL</button>
-      <button class="chip" type="button" data-skill="integration" aria-pressed="false">ERP &amp; CRM integration</button>
-      <button class="chip" type="button" data-skill="kafka" aria-pressed="false">Kafka / Camel / MQ</button>
-      <button class="chip" type="button" data-skill="security" aria-pressed="false">JWT / OAuth / encryption</button>
+      <button class="chip" type="button" data-skill="integration" aria-pressed="false">Apache Camel / XML DSL</button>
+      <button class="chip" type="button" data-skill="kafka" aria-pressed="false">Kafka / MQ / SFTP</button>
     </div></div>
-    <div class="skill-group"><span class="lbl">Cloud, delivery &amp; AI</span><div class="chips">
-      <button class="chip" type="button" data-skill="aws" aria-pressed="false">AWS</button>
-      <button class="chip" type="button" data-skill="cloud" aria-pressed="false">OpenShift / Azure</button>
-      <button class="chip" type="button" data-skill="devops" aria-pressed="false">Jenkins / Docker / CI/CD</button>
-      <button class="chip" type="button" data-skill="ai" aria-pressed="false">LLMs &amp; agentic AI</button>
+    <div class="skill-group"><span class="lbl">Cloud &amp; delivery</span><div class="chips">
+      <button class="chip" type="button" data-skill="aws" aria-pressed="false">AWS Lambda / Step Functions / S3</button>
+      <button class="chip" type="button" data-skill="cloud" aria-pressed="false">OpenShift / WebLogic / WebSphere</button>
+      <button class="chip" type="button" data-skill="devops" aria-pressed="false">Docker / Jenkins / Bitbucket pipelines</button>
+    </div></div>
+    <div class="skill-group"><span class="lbl">Testing &amp; AI tools</span><div class="chips">
+      <button class="chip" type="button" data-skill="testing" aria-pressed="false">Postman / SIT/UAT / Splunk</button>
+      <button class="chip" type="button" data-skill="ai" aria-pressed="false">Claude / GitHub Copilot / OpenAI APIs</button>
     </div></div>
   </div>
 </section>
@@ -259,50 +272,82 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
 <section class="num reveal" aria-labelledby="s3">
   <span class="n">03</span>
   <div class="sec-body">
-    <h2 id="s3">Soft Skills</h2>
-    <div class="chips"><span class="chip">Clear client communication</span><span class="chip">Cross-team collaboration</span><span class="chip">Ownership in production</span><span class="chip">Thorough code reviews</span><span class="chip">Calm under incidents</span><span class="chip">Documentation people actually read</span></div>
-    <p class="hint">I work closely with business stakeholders, architects and QA, from requirements through SIT/UAT to release, and I like explaining technical trade-offs in plain language.</p>
+    <h2 id="s3">How I Work</h2>
+    <div class="chips"><span class="chip">Direct client work</span><span class="chip">Solution design</span><span class="chip">Code reviews</span><span class="chip">Test plans and SIT/UAT</span><span class="chip">Production support</span><span class="chip">Technical manuals</span><span class="chip">User onboarding</span></div>
+    <p class="hint">I work directly with clients, business stakeholders, architects, developers and QA to translate requirements into working software and reliable data workflows.</p>
   </div>
 </section>
 
 <section class="num reveal" id="experience" aria-labelledby="s4">
   <span class="n">04</span>
   <div class="sec-body">
-    <h2 id="s4">Experience</h2>
+    <h2 id="s4">Professional Experience</h2>
     <p class="hint">Select a role to see more.</p>
     <ol class="jobs" data-filterable>
-      <li class="job" data-skills="java spring apis cloud devops security python powerbi ai">
-        <button class="job-head" type="button" aria-expanded="false"><span class="when">2025 – 2026</span><span><strong>Application Developer · IBM</strong><small>Spring Boot microservices and REST APIs on Red Hat OpenShift.</small></span><span class="plus" aria-hidden="true">+</span></button>
+      <li class="job" data-skills="java spring apis integration cloud testing python powerbi aws ai">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">Sep 2025 – Sep 2026</span><span><strong>Application Developer · IBM Canada Ltd.</strong><small>Java Spring Boot microservices and REST APIs, production support on OpenShift.</small></span><span class="plus" aria-hidden="true">+</span></button>
         <div class="job-more"><div><ul>
-          <li>Built and supported Java Spring Boot microservices connecting client apps, databases and downstream enterprise systems.</li>
-          <li>Resolved production incidents using OpenShift logs and Splunk dashboards to find root causes and restore service.</li>
-          <li>Applied authentication, authorization and encryption; validated AI-generated code against enterprise security standards.</li>
-          <li>Automated report generation with Python and built Power BI reporting on Tenable data for clients and management.</li>
+          <li>Developed and supported Java Spring Boot microservices and REST APIs connecting client-facing applications, databases and downstream enterprise systems; worked with XML DSL and Hibernate.</li>
+          <li>Tested JSON/XML API requests and responses in Postman; collaborated with QA on SIT/UAT, defect resolution and deployment validation.</li>
+          <li>Investigated production incidents using Splunk dashboards, OpenShift logs and application logs to identify root causes and restore service availability.</li>
+          <li>Supported OpenShift application operations through pod health checks, restarts, controlled stop/start during patching, deployment checks and JVM heap/container memory adjustments.</li>
+          <li>Applied authentication, authorization, encryption and secure coding practices; participated in vulnerability checks, dependency reviews and enterprise security validation.</li>
+          <li>Automated report generation and conversion using Python to prepare data for reporting, AI-assisted automation and data validation.</li>
+          <li>Used Tenable data in Power BI for client and management reporting; worked with stakeholders to address reporting requirements.</li>
+          <li>Participated in migration activities from on-premises environments to AWS and worked with architects, developers and QA on requirements and releases.</li>
+          <li>Used AI-assisted development and review tools, including Claude, and validated generated changes against enterprise quality and security standards.</li>
         </ul></div></div>
       </li>
-      <li class="job" data-skills="csharp java react apis integration kafka etl sql python aws powerbi devops security">
-        <button class="job-head" type="button" aria-expanded="false"><span class="when">2020 – 2023</span><span><strong>Software Engineer · Infor</strong><small>C# and Java APIs for ERP, finance and reporting; ETL into AWS warehouses.</small></span><span class="plus" aria-hidden="true">+</span></button>
-        <div class="job-more"><div><ul>
-          <li>Built REST APIs and backend services in C# and Java for ERP integrations and finance tools, using Apache Camel and Hibernate.</li>
-          <li>Developed React dashboards for EPM datasets and business modeling apps in C# and React.</li>
-          <li>Created ETL pipelines with SSIS, PowerShell and Python moving S3 data into cloud warehouses; used AWS Glue.</li>
-          <li>Built JWT-authenticated services; automated deployments with Jenkins, Docker and Bitbucket pipelines.</li>
-          <li>Refactored legacy code with Factory and Singleton patterns and replaced servlets with REST controllers.</li>
+      <li class="job" data-skills="java spring csharp react legacyweb scripting python etl sql olap bi powerbi crystal apis integration kafka aws cloud devops testing">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">Sep 2020 – Jul 2023</span><span><strong>Software Engineer · Infor, Philippines</strong><small>Worked concurrently on DWD, Business Modeling and Lawson BI, delivering application features, data engineering enhancements and reporting platform fixes.</small></span><span class="plus" aria-hidden="true">+</span></button>
+        <div class="job-more"><div><h4>ETL pipelines and data warehouse development</h4><ul>
+          <li>Created and maintained ETL pipelines using SSIS, PowerShell and Python to transfer enterprise data, including Amazon S3 data, into reporting and cloud data warehouse workflows.</li>
+          <li>Resolved defects and enhanced DWD data warehouse applications using SQL scripts, SSIS, MSDB, VB6, PowerShell and SVN.</li>
+          <li>Developed and adjusted Oracle SQL/PLSQL stored procedures and views, improving query performance and supporting application data processing.</li>
+          <li>Worked with Oracle SQL, SQL Server and Azure SQL integrations; built databases and table structures for application requirements.</li>
+          <li>Executed integration imports, validated results, and investigated data load and data source failures during testing.</li>
+          <li>Implemented business modeling backup file imports and created XML data import functionality for OLAP cubes.</li>
+          <li>Updated three classes supporting integration import schedules to trigger notifications for file changes and uploads.</li>
+        </ul><h4>Backend services and application modernization</h4><ul>
+          <li>Built REST APIs and backend services using Java and C# for ERP integrations, finance and reporting tools; used Apache Camel, XML DSL, JSON processing and Hibernate.</li>
+          <li>Developed business modeling applications using C# and React, built dashboards for EPM datasets, and delivered JavaScript, HTML and CSS enhancements.</li>
+          <li>Upgraded legacy Java code from Java 8 to Java 17 and replaced servlet-based endpoints with Spring Boot REST controllers.</li>
+          <li>Refactored legacy code using Factory and Singleton patterns and separated business logic into services with a single responsibility.</li>
+          <li>Supported backend services in WebLogic, developed JWT-authenticated services, and addressed Spring Boot compatibility with AWS and WebLogic; used GraphQL with Java.</li>
+          <li>Developed serverless functions and application workflows using AWS Lambda, TypeScript and Step Functions.</li>
+          <li>Implemented custom CMS features and integrated third-party tools and components to address client requirements.</li>
+        </ul><h4>Testing and release engineering</h4><ul>
+          <li>Reviewed colleagues' code and unit tests during development review and pretesting; ran and extended automated backend tests and contributed to a tool for identifying potential bugs introduced by code changes.</li>
+          <li>Added logging for DataAccessContainer operations and BOController actions; expanded automatic test logs with parameters and execution-time tracking for functions and classes.</li>
+          <li>Automated deployments using Jenkins, Docker and Bitbucket pipelines; improved versioning and rollback workflows and collaborated on multi-region rollouts.</li>
+          <li>Created Jenkins project infrastructure and builds; used PowerShell for administration, configuration, SQL wrapper handling and registry cleanup.</li>
+          <li>Coordinated feature and fix deployments with developers, testers and clients; participated in architecture and design, wrote test plans, and developed debugging scripts and testing tools.</li>
+        </ul><h4>BI reporting platforms and reliability</h4><ul>
+          <li>Developed and supported server-based Lawson BI Reporting Services using Java/J2EE, JSP, JavaScript, HTML, CSS, XML, SQL, Apache and IBM WebSphere Application Server.</li>
+          <li>Resolved SFTP connection resets during report broadcasts by adding connection handling and configurable timeouts, with related interface changes.</li>
+          <li>Implemented parameterized PDF exports from SAP Crystal Reports and updated HTML, CSS, XML and JavaScript interfaces for the new functionality.</li>
+          <li>Created scripts to export report users and custom group users; investigated data source failures during testing.</li>
+          <li>Administered Power BI gateway connections, connection permissions and capacities for client reporting requirements.</li>
+          <li>Automated BI reporting in secure virtual server environments and improved DEPMAPPS cube captions with meaningful names for users.</li>
+          <li>Updated installation guides and technical manuals; assessed Java 11, Java 15, Spring Boot and RAS service pack levels for future upgrades.</li>
+          <li>Worked directly with clients on reporting defects and enhancements, supported user onboarding, and troubleshot cloud and on-premises systems.</li>
         </ul></div></div>
       </li>
-      <li class="job" data-skills="java apis integration etl sql python">
-        <button class="job-head" type="button" aria-expanded="false"><span class="when">2019 – 2020</span><span><strong>Associate Software Engineer · Accenture</strong><small>Oracle Sales Cloud integrations for banking and insurance clients.</small></span><span class="plus" aria-hidden="true">+</span></button>
+      <li class="job" data-skills="java scripting python etl sql oraclebi apis integration legacyweb">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">Feb 2019 – Jul 2020</span><span><strong>Associate Software Engineer · Accenture, Philippines</strong><small>Oracle Sales Cloud integrations, ETL automation and Oracle BI reporting.</small></span><span class="plus" aria-hidden="true">+</span></button>
         <div class="job-more"><div><ul>
-          <li>Developed Oracle Sales Cloud integrations with Java, Groovy, SOAP and REST for business and compliance needs.</li>
-          <li>Designed ETL and database automation with Oracle Data Integrator and Azure pipelines.</li>
-          <li>Automated testing workflows with J2EE, reducing errors by 45%; improved data integrity by 60% with Groovy scripting.</li>
+          <li>Developed Oracle Sales Cloud integrations using Java, Groovy, REST and SOAP APIs for business and compliance requirements.</li>
+          <li>Designed ETL and database automation using Oracle Data Integrator, Azure pipelines and scheduled jobs.</li>
+          <li>Built Oracle BI and Oracle Analytics reports and supported bulk data loads, reporting requirements and artifact generation.</li>
+          <li>Implemented scripted user restrictions, retrieved backup data through REST APIs, and automated tasks with Python for banking and insurance client workflows.</li>
+          <li>Delivered JavaScript and jQuery interface enhancements and worked with client teams to resolve application and integration issues.</li>
         </ul></div></div>
       </li>
-      <li class="job" data-skills="csharp sql">
-        <button class="job-head" type="button" aria-expanded="false"><span class="when">2018</span><span><strong>Project &amp; Automation Intern · Accenture</strong><small>Reporting automation in C#, VBA and SQL Server.</small></span><span class="plus" aria-hidden="true">+</span></button>
+      <li class="job" data-skills="csharp scripting sql">
+        <button class="job-head" type="button" aria-expanded="false"><span class="when">May 2018 – Jul 2018</span><span><strong>Project and Automation Intern · Accenture</strong><small>Report generation and email scheduling tools in C#, VBA and SQL Server.</small></span><span class="plus" aria-hidden="true">+</span></button>
         <div class="job-more"><div><ul>
-          <li>Built report generation and email scheduling tools; modernized legacy C++ reporting with .NET.</li>
-          <li>Created data transformation routines that cut manual reporting time by 40%.</li>
+          <li>Built report generation and email scheduling tools using C#, VBA and SQL Server to automate internal reporting tasks.</li>
+          <li>Created data transformation routines and automated repeatable reporting steps with minimal supervision.</li>
         </ul></div></div>
       </li>
     </ol>
@@ -314,7 +359,7 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
   <div class="sec-body">
     <h2 id="s5">Selected Work</h2>
     <div class="work">
-      <a class="card" href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener"><span class="tag">Company</span><h3>Jurgen Software Solutions</h3><p>My software consultancy: custom software, ETL pipelines, AI and cloud. Multi-page site with an interactive ETL security diagram.</p></a>
+      <a class="card" href="https://gameovercheeseburger.github.io/jurgen-software-solutions/" target="_blank" rel="noopener"><span class="tag">Company</span><h3>Jurgen Software Solutions</h3><p>A company website I built: multi-page site with an interactive ETL security diagram.</p></a>
       <a class="card" href="https://budgeting-app-azure-delta.vercel.app" target="_blank" rel="noopener"><span class="tag">Product</span><h3>Budgie</h3><p>A personal budgeting app for tracking budgets and spending, deployed on Vercel.</p></a>
     </div>
   </div>
@@ -323,12 +368,12 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
 <section class="num reveal" aria-labelledby="s6">
   <span class="n">06</span>
   <div class="sec-body">
-    <h2 id="s6">Education &amp; Certifications</h2>
+    <h2 id="s6">Education, Certifications &amp; Training</h2>
     <div class="items">
-      <div class="item"><h3>Diploma, Software Development</h3><p>Southern Alberta Institute of Technology (SAIT), 2025</p></div>
-      <div class="item"><h3>B.S. Computer Engineering</h3><p>Adamson University, 2018</p></div>
+      <div class="item"><h3>Diploma, Software Development</h3><p>Southern Alberta Institute of Technology, Sep 2023 – Apr 2025</p></div>
+      <div class="item"><h3>Bachelor of Science, Computer Engineering</h3><p>Adamson University, Jul 2012 – Jun 2018</p></div>
     </div>
-    <div class="chips"><span class="chip">IBM Generative &amp; Agentic AI Foundation</span><span class="chip">AWS Generative AI Essentials</span><span class="chip">OCI 2025 AI Foundations Associate</span><span class="chip">IBM Cloud Computing Fundamentals</span><span class="chip">IBM Enterprise Design Thinking</span><span class="chip">ServiceNow Flow Designer</span></div>
+    <div class="chips"><span class="chip">IBM Generative &amp; Agentic AI Foundations</span><span class="chip">Oracle Cloud Infrastructure 2025 Certified AI Foundations Associate</span><span class="chip">AWS Partner Generative AI Essentials</span><span class="chip">IBM Cloud Computing Fundamentals</span><span class="chip">ServiceNow Micro-Certification in Flow Designer</span><span class="chip">HackerRank Python Basic</span><span class="chip">HackerRank Java Basic</span></div>
   </div>
 </section>
 
@@ -336,7 +381,7 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
   <span class="n">07</span>
   <div class="sec-body">
     <h2 id="s7">Let's talk</h2>
-    <p class="hint">Hiring for backend, integration or data roles? I'd like to hear from you.</p>
+    <p class="hint">Hiring for software or data engineering roles? I'd like to hear from you.</p>
     <div class="contact">
       <code id="email">patrikjurgen.santiago@gmail.com</code>
       <button class="pill primary" type="button" id="copy">Copy email</button>
@@ -408,7 +453,7 @@ footer .row { display: flex; justify-content: space-between; gap: 16px; flex-wra
   /* Rotating role line. The phrases come from the Spring Boot roles-api when
      ROLES_API is set; the built-in list is used until then or if it is down. */
   var ROLES_API = '';
-  var roles = ['ETL and data pipelines', 'secure REST APIs', 'finance and ERP integrations', 'Power BI reporting', 'AI-assisted tooling'];
+  var roles = ['Java and Spring Boot services', 'C#/.NET services', 'React applications', 'ETL pipelines', 'reliable data workflows'];
   var rot = document.getElementById('rot');
   var nextRoles = null; // list from the API, switched in once the current word is erased
   if (ROLES_API) {
